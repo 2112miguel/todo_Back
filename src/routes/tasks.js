@@ -27,7 +27,7 @@ router.get("/id", async (req, res, next) => {
   }
 });
 
-router.post("/", authHandler, async (req, res, next) => {
+router.post("/", async (req, res, next) => {
   try {
     const { nameTask, timeTask, completeTask } = req.body;
     const createTask = await task.create({ nameTask, timeTask, completeTask });
@@ -40,7 +40,7 @@ router.post("/", authHandler, async (req, res, next) => {
   }
 });
 
-router.patch("/:id", authHandler, async (req, res, next) => {
+router.patch("/:id", async (req, res, next) => {
   try {
     const { id } = req.params;
     const taskUpdate = await task.patch(id, { ...req.body });

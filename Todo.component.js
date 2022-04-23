@@ -1,15 +1,15 @@
-export default class Todo{
-    tarea= []
-    cargarLocalTarea(){
-        const tareasLocal = localStorage.getItem('tareas');
-        if (tareasLocal) {
-            this.tarea = JSON.parse(tareasLocal);
-            
-        }
-    }
+import { urlApi } from "./Global.js";
 
-    guardarStorage() {
-        const tareaJson = JSON.stringify(this.tarea);
-        localStorage.setItem('tareas', tareaJson);
-    }
-}
+export const tareasApi = () => {
+  try {
+    console.log(`${urlApi}/todo`);
+    fetch(`${urlApi}/todo`, {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+      },
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
