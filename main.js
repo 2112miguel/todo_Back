@@ -1,38 +1,37 @@
 import {
   tareas,
+  tareaPost,
   elementos,
   numeroTareasPendientes,
   numeroTareasCompletadas,
 } from "./Global.js";
 
-const initTodo = () => {
-  const tarea = tareas();
+const initTodo = async () => {
+  const tarea = await tareas();
+
+  renderizarTarea(tarea);
   // window.renderizarTarea(tareas.tarea);
   // contadorTareas();
 };
 
-window.guardaTarea = (e) => {
+const guardaTarea = (e) => {
   e.preventDefault();
   const tiempoActual = new Date();
   const inputsNode = e.target.querySelector("input");
   const inputs = Array.from(inputsNode);
   let tarea = {};
-  tarea.nombreTarea = inputsNode.value;
-  tarea.id = `${tiempoActual.getTime()}-${tiempoActual.getMilliseconds()}`;
-  tarea.tareaCompletada = false;
-  tareas.tarea.push(tarea);
-  tareas.guardarStorage();
-  window.renderizarTarea(tareas.tarea);
-  inputsNode.value = "";
-  contadorTareas();
+  tarea.nameTask = inputsNode.value;
+  tarea.timeTask = `${tiempoActual.getTime()}-${tiempoActual.getMilliseconds()}`;
+  tarea.completeTask = false;
+  const tareaCrear = tareaPost(tarea);
 };
 
 const divTarea = (tarea) => {
   const div = `<div class="d-flex justify-content-between align-items-center pointer border rounded p-2" ondblclick="dobleClickTarea('${tarea.id}')">
-                        <p id=${tarea.id} class="fw-bold">${tarea.nombreTarea}</p>
+                        <p id=${tarea._id} class="fw-bold">${tarea.nameTask}</p>
                         <div>
-                            <button  class="btn btn-primary" onclick="modificarTarea('${tarea.id}')"><i class="fa-solid fa-pen-to-square"></i></button>
-                            <button class="btn btn-danger" onclick="eliminarTarea('${tarea.id}')"><i class="fa-solid fa-trash-can"></i></button>
+                            <button  class="btn btn-primary" onclick="modificarTarea('${tarea._id}')"><i class="fa-solid fa-pen-to-square"></i></button>
+                            <button class="btn btn-danger" onclick="eliminarTarea('${tarea._id}')"><i class="fa-solid fa-trash-can"></i></button>
                         </div>
                     </div>`;
   return div;
@@ -43,8 +42,8 @@ window.renderizarTarea = (tareas) => {
   while (divTareas.firstChild) {
     divTareas.removeChild(divTareas.firstChild);
   }
-
-  tareas.forEach((tarea) => {
+  console.log(tareas);
+  tareas.playload.forEach((tarea) => {
     const card = divTarea(tarea);
     elementos.divTarea.insertAdjacentHTML("afterbegin", card);
     const divClase = elementos.divTarea.firstChild;
@@ -118,5 +117,8 @@ const contadorTareas = () => {
   tareas.guardarStorage();
 };
 
-const main = await initTodo();
+setTimeout(async () => {
+  const main = await initTodo();
+}, 200);
+
 //contadorTareas();

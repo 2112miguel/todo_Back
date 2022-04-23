@@ -1,22 +1,24 @@
 const express = require("express");
-const db = require("./src/lib/db")
-const config = require("./src/lib/config")
+const db = require("./src/lib/db");
+const config = require("./src/lib/config");
 const app = express();
 const port = config.app.port;
-const apiRouter = require("./src/routes")
+const apiRouter = require("./src/routes");
+const cors = require("cors");
 
 app.use(express.json());
-apiRouter(app)
+app.use(cors());
+apiRouter(app);
 app.listen(port, () => {
-    console.log(
-        `Bienvenido a ${config.app.name}, escuchando desde el puerto ${port}`
-    );
+  console.log(
+    `Bienvenido a ${config.app.name}, escuchando desde el puerto ${port}`
+  );
 
-    db.connect()
-        .then(() => {
-            console.log("Conectado a la base de datos");
-        })
-        .catch((err) => {
-            console.log("Conexion denegada a la base de datos:", err);
-        });
+  db.connect()
+    .then(() => {
+      console.log("Conectado a la base de datos");
+    })
+    .catch((err) => {
+      console.log("Conexion denegada a la base de datos:", err);
+    });
 });

@@ -1,11 +1,12 @@
-import { tareasApi } from "./Todo.component.js";
+import { tareasApi, ingresarTarea } from "./Todo.component.js";
 export const tareas = tareasApi;
+export const tareaPost = ingresarTarea;
 const sectionNodo = document.querySelectorAll("section");
 export const numeroTareasPendientes =
   document.getElementById("tareasPendientes");
 export const numeroTareasCompletadas =
   document.getElementById("tareasCompletas");
-export const urlApi = `https://pokeapi.co/api/v2/pokemon?limit=150&offset=0`; //http://localhost:8000
+export const urlApi = `http://localhost:8000`;
 export const elementos = {
   divTarea: document.getElementById("divTareas"),
 };
