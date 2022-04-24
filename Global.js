@@ -1,6 +1,17 @@
-import { tareasApi, ingresarTarea } from "./Todo.component.js";
+import {
+  tareasApi,
+  ingresarTarea,
+  modificaTarea,
+  patchCompleteTrue,
+  patchCompleteFalse,
+  idGet,
+} from "./Todo.component.js";
+export const tareaGetId = idGet;
 export const tareas = tareasApi;
 export const tareaPost = ingresarTarea;
+export const tareaPATCH = modificaTarea;
+export const trueTask = patchCompleteTrue;
+export const falseTask = patchCompleteFalse;
 const sectionNodo = document.querySelectorAll("section");
 export const numeroTareasPendientes =
   document.getElementById("tareasPendientes");
