@@ -4,11 +4,11 @@ const jwt = require("../lib/jwt");
 
 router.post("/login", async (req, res, next) => {
   try {
-    const { id, password } = req.body;
-    const retrievedUser = await usr.getById(id);
-    const isMatch = await usr.authenticate(retrievedUser, password);
+    const { user, password } = req.body;
+    const retrievedUser = await usr.findUser(user);
     console.log(retrievedUser);
-    if (isMatch) {
+    const isMatch = await usr.authenticate(password);
+    if (isMatch && retrievedUser.password == password) {
       const token = await jwt.sing({
         sub: retrievedUser._id,
         role: retrievedUser.role,

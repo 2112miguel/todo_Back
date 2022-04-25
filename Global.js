@@ -5,7 +5,13 @@ import {
   patchCompleteTrue,
   patchCompleteFalse,
   idGet,
+  postUser,
+  delTask,
+  logInUserPost,
 } from "./Todo.component.js";
+export const logInPost = logInUserPost;
+export const borrarTarea = delTask;
+export const crearUser = postUser;
 export const tareaGetId = idGet;
 export const tareas = tareasApi;
 export const tareaPost = ingresarTarea;

@@ -9,7 +9,11 @@ const getById = async (id) => {
   return await User.findById(id).exec();
 };
 
-const authenticate = async (user, password) => {
+const findUser = async (user) => {
+  return await User.findOne({ user }).exec();
+};
+
+const authenticate = async (password) => {
   const hash = await encrypt.hashpswd(password);
   return await encrypt.verifyPswd(password, hash);
 };
@@ -30,4 +34,5 @@ module.exports = {
   getById,
   authenticate,
   create,
+  findUser,
 };

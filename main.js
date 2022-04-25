@@ -8,36 +8,11 @@ import {
   elementos,
   numeroTareasPendientes,
   numeroTareasCompletadas,
+  borrarTarea,
 } from "./Global.js";
 
 const initTodo = async () => {
   const pinta = await pintarTarea();
-  // window.renderizarTarea(tareas.tarea);
-  // contadorTareas();
-};
-
-window.guardaTarea = (e) => {
-  e.preventDefault();
-  const tiempoActual = new Date();
-  const inputsNode = e.target.querySelector("input");
-  const inputs = Array.from(inputsNode);
-  let tarea = {};
-  tarea.nameTask = inputsNode.value;
-  tarea.timeTask = tiempoActual.getTime();
-  tarea.completeTask = "false";
-  //console.log("Entra ",tarea);
-  const tareaCrear = tareaPost(tarea);
-};
-
-const divTarea = (tarea) => {
-  const div = `<div class="d-flex justify-content-between align-items-center pointer border rounded p-2" ondblclick="dobleClickTarea('${tarea._id}')">
-                        <p id=${tarea._id} class="fw-bold">${tarea.nameTask}</p>
-                        <div>
-                            <button  class="btn btn-primary" onclick="modificarTarea('${tarea._id}')"><i class="fa-solid fa-pen-to-square"></i></button>
-                            <button class="btn btn-danger" onclick="eliminarTarea('${tarea._id}')"><i class="fa-solid fa-trash-can"></i></button>
-                        </div>
-                    </div>`;
-  return div;
 };
 
 window.renderizarTarea = () => {
@@ -48,7 +23,6 @@ window.renderizarTarea = () => {
 };
 
 window.pintarTarea = async () => {
-  renderizarTarea();
   const task = await tareas();
   task.playload.forEach((tarea) => {
     const card = divTarea(tarea);
@@ -63,21 +37,46 @@ window.pintarTarea = async () => {
   });
 };
 
+window.guardaTarea = async (e) => {
+  e.preventDefault();
+  const tiempoActual = new Date();
+  const inputsNode = e.target.querySelector("input");
+  const inputs = Array.from(inputsNode);
+  let tarea = {};
+  tarea.nameTask = inputsNode.value;
+  tarea.timeTask = tiempoActual.getTime();
+  tarea.completeTask = "false";
+  //console.log("Entra ",tarea);
+  const tareaCrear = tareaPost(tarea);
+  setTimeout(async () => {
+    const main = await initTodo();
+  }, 200);
+};
+
+const divTarea = (tarea) => {
+  const div = `<div class="d-flex justify-content-between align-items-center pointer border rounded p-2" ondblclick="dobleClickTarea('${tarea._id}')">
+                        <p id=${tarea._id} class="fw-bold">${tarea.nameTask}</p>
+                        <div>
+                            <button  class="btn btn-primary" onclick="modificarTarea('${tarea._id}')"><i class="fa-solid fa-pen-to-square"></i></button>
+                            <button class="btn btn-danger" onclick="eliminarTarea('${tarea._id}')"><i class="fa-solid fa-trash-can"></i></button>
+                        </div>
+                    </div>`;
+  return div;
+};
+
 window.eliminarTarea = (id) => {
-  const data = tareas.tarea.filter((tarea) => {
-    return tarea.id != id;
-  });
-  console.log(data);
-  tareas.tarea = data;
-  tareas.guardarStorage();
-  renderizarTarea(tareas.tarea);
-  contadorTareas();
+  const deleteTarea = borrarTarea(id);
+  setTimeout(async () => {
+    const main = await initTodo();
+  }, 200);
 };
 
 window.modificarTarea = async (id) => {
   let nombreTarea = prompt("Modifica tu tarea");
   const moficaTarea = tareaPATCH(id, nombreTarea);
-  const pintaTareas = await pintarTarea();
+  setTimeout(async () => {
+    const main = await initTodo();
+  }, 200);
 };
 
 window.dobleClickTarea = async (id) => {

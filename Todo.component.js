@@ -73,3 +73,41 @@ export const patchCompleteFalse = async (id) => {
     },
   });
 };
+
+export const postUser = (userInput, passwordInput) => {
+  const url = `${urlApi}/user`;
+  console.log("Entra");
+  fetch(url, {
+    method: "POST",
+    body: JSON.stringify({
+      user: userInput,
+      password: passwordInput,
+    }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+};
+
+export const logInUserPost = async (user, password) => {
+  const url = `${urlApi}/auth/login`;
+  const token = fetch(url, {
+    method: "POST",
+    body: JSON.stringify({
+      user: user,
+      password: password,
+    }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  //console.log(token);
+  return token;
+};
+
+export const delTask = (id) => {
+  const url = `${urlApi}/todo/${id}`;
+  fetch(url, {
+    method: "DELETE",
+  });
+};

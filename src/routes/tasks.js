@@ -66,4 +66,16 @@ router.put("/:id", async (req, res, next) => {
   }
 });
 
+router.delete("/:id", async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const delTasl = task.del(id);
+    res.json({
+      success: true,
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
 module.exports = router;

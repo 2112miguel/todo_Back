@@ -30,10 +30,15 @@ const patch = async (id, taskData) => {
   return await Task.findByIdAndUpdate(id, { ...taskData }).exec();
 };
 
+const del = async (id) => {
+  return await Task.findByIdAndDelete(id).exec();
+};
+
 module.exports = {
   get,
   getById,
   create,
   update,
   patch,
+  del,
 };
