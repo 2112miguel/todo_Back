@@ -6,9 +6,8 @@ router.post("/login", async (req, res, next) => {
   try {
     const { user, password } = req.body;
     const retrievedUser = await usr.findUser(user);
-    console.log(retrievedUser);
     const isMatch = await usr.authenticate(password);
-    if (isMatch && retrievedUser.password == password) {
+    if (isMatch && retrievedUser.password.toString() == password.toString()) {
       const token = await jwt.sing({
         sub: retrievedUser._id,
         role: retrievedUser.role,
